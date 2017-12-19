@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Order Post Processing" id="Project_17bdc2b" template="Default" database="SqlServer" >
+	<schema name="Order Post Processing" schemaname="Order Post Processing" >
+		<table name="Email" >
+			<column name="IDX" type="int" jt="4" mandatory="y" />
+			<column name="user_email_address" type="nvarchar(max)" length="100" jt="12" />
+			<column name="status" type="bit" jt="-7" />
+			<column name="order_id" type="int" jt="4" />
+			<column name="invoice_id" type="int" jt="4" />
+			<index name="Pk_Email_IDX" unique="PRIMARY_KEY" >
+				<column name="IDX" />
+			</index>
+			<index name="Idx_Email_user_email_address" unique="NORMAL" >
+				<column name="user_email_address" />
+			</index>
+			<index name="Idx_Email_order_id" unique="NORMAL" >
+				<column name="order_id" />
+			</index>
+			<index name="Idx_Email_invoice_id" unique="NORMAL" >
+				<column name="invoice_id" />
+			</index>
+			<fk name="fk_email_user" to_schema="Order Post Processing" to_table="User" >
+				<fk_column name="user_email_address" pk="email_address" />
+			</fk>
+			<fk name="fk_email_order" to_schema="Order Post Processing" to_table="Order" >
+				<fk_column name="order_id" pk="order_id" />
+			</fk>
+			<fk name="fk_email_invoice" to_schema="Order Post Processing" to_table="Invoice" >
+				<fk_column name="invoice_id" pk="invoice_id" />
+			</fk>
+		</table>
+		<table name="Invoice" >
+			<column name="invoice_id" type="int" jt="4" mandatory="y" />
+			<column name="order_id" type="int" jt="4" />
+			<column name="invoice_details" type="nvarchar(max)" jt="12" />
+			<index name="Pk_Invoice_invoice_id" unique="PRIMARY_KEY" >
+				<column name="invoice_id" />
+			</index>
+			<index name="Idx_Invoice_order_id" unique="NORMAL" >
+				<column name="order_id" />
+			</index>
+			<fk name="fk_invoice_order" to_schema="Order Post Processing" to_table="Order" >
+				<fk_column name="order_id" pk="order_id" />
+			</fk>
+		</table>
+		<table name="Order" >
+			<column name="order_id" type="int" jt="4" mandatory="y" />
+			<column name="user_id" type="int" jt="4" />
+			<column name="order_details" type="nvarchar(max)" jt="12" />
+			<index name="Pk_Order_order_id" unique="PRIMARY_KEY" >
+				<column name="order_id" />
+			</index>
+			<index name="Idx_Order_user_id" unique="NORMAL" >
+				<column name="user_id" />
+			</index>
+			<fk name="fk_order_user" to_schema="Order Post Processing" to_table="User" >
+				<fk_column name="user_id" pk="user_id" />
+			</fk>
+		</table>
+		<table name="Sms" >
+			<column name="sms_id" type="int" jt="4" mandatory="y" />
+			<column name="mobile_number" type="int" jt="4" />
+			<column name="status" type="bit" jt="-7" />
+			<column name="order_id" type="int" jt="4" />
+			<index name="Pk_Sms_sms_id" unique="PRIMARY_KEY" >
+				<column name="sms_id" />
+			</index>
+			<index name="Idx_Sms_mobile_number" unique="NORMAL" >
+				<column name="mobile_number" />
+			</index>
+			<index name="Idx_Sms_order_id" unique="NORMAL" >
+				<column name="order_id" />
+			</index>
+			<fk name="fk_sms_user" to_schema="Order Post Processing" to_table="User" >
+				<fk_column name="mobile_number" pk="mobile_number" />
+			</fk>
+			<fk name="fk_sms_order" to_schema="Order Post Processing" to_table="Order" >
+				<fk_column name="order_id" pk="order_id" />
+			</fk>
+		</table>
+		<table name="User" >
+			<column name="user_id" type="int" jt="4" mandatory="y" />
+			<column name="first_name" type="nvarchar(max)" length="100" jt="12" />
+			<column name="last_name" type="nvarchar(max)" length="100" jt="12" />
+			<column name="email_address" type="nvarchar(max)" length="100" jt="12" />
+			<column name="mobile_number" type="int" jt="4" />
+			<index name="Pk_User_UserId" unique="PRIMARY_KEY" >
+				<column name="user_id" />
+			</index>
+			<index name="Unq_User_mobile_number" unique="UNIQUE" >
+				<column name="mobile_number" />
+			</index>
+			<index name="Unq_User_email_address" unique="UNIQUE" >
+				<column name="email_address" />
+			</index>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout_2b6f366" show_relation="columns" >
+		<entity schema="Order Post Processing" name="User" color="c1d8ee" x="360" y="150" />
+		<entity schema="Order Post Processing" name="Order" color="c1d8ee" x="360" y="375" />
+		<entity schema="Order Post Processing" name="Sms" color="c1d8ee" x="90" y="150" />
+		<entity schema="Order Post Processing" name="Email" color="c1d8ee" x="615" y="150" />
+		<entity schema="Order Post Processing" name="Invoice" color="c1d8ee" x="675" y="390" />
+		<callout x="45" y="45" pointer="NO" >
+			<comment><![CDATA[This project is in offline mode.
+Design the schema and save the design to project file. Later create or upgrade the schema on any database.
+Right-click the layout to add new tables. Drop this callout from its right-click pop-up menu.]]></comment>
+		</callout>
+	</layout>
+</project>
