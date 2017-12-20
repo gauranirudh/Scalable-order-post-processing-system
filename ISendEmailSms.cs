@@ -8,5 +8,6 @@ namespace SendSmsEmail
     {
         bool SendSms(Sms smsObject);
         bool SendEmail(Email emailObject);
+        void ReceiveMessageFromRabbitMQ(string hostName);
     }
 }

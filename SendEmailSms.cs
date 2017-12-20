@@ -8,6 +8,17 @@ namespace SendSmsEmail
 {
     public class SendEmailSms : ISendEmailSms
     {
+        public void ReceiveMessageFromRabbitMQ(string hostName)
+        {
+            //hostName can be "localhost"
+            ReceiverRabbitMQ receiver = new ReceiverRabbitMQ(hostName);
+            receiver.ReceiveMessage();
+            Sms sms = new Sms();
+            Email email = new Email();
+            bool smsStatus = SendSms(sms);
+            bool emailStatus = SendEmail(email);
+        }
+
         public bool SendSms(Sms smsObject)
         {
             try
