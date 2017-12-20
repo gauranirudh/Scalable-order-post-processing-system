@@ -10,7 +10,7 @@
 8. To implement Master-Slave, have a master node in each shard which has a slave node which reads all new updates from master and keeps updating itself. Clients can read from either the master or the slave depending on which responds earlier.
 
 System Limits:
-1. Lets assume that we have to process 10M QPS(queries per second) or 166667 queries/request per min.
+1. Lets assume that we have to process 10M QPS(queries/Orders per second) or 166667 queries/orders per min.
 2. Lets assume that we would have to store is 30TB data. We can accommodate 72GB of data on every single machine ( neglected process memory overheads for the time being ). With that, we would need 420 machines. With that config, every machine would handle around 23000 QPS(queries per second).
 3. Next assuming that a machine has to serve 23,000 QPS then we look at each machine has 4 core and then we calculate the per request time as - CPU time available per query = 4 * 1000 * 1000 / 23000 microseconds = 174us (Note everything is converted to milliseconds.) So the machines have to return the query in 174 us.
-4. Although messages flow through RabbitMQ and our applications, they can only be stored inside a queue. A queue is only bound by the host's memory & disk limits.
+4. Sending SMS/Email will take extra time than above depending on time taken by RabbitMQ and third party services. Although messages flow through RabbitMQ and our applications, they can only be stored inside a queue. A queue is only bound by the host's memory & disk limits.
